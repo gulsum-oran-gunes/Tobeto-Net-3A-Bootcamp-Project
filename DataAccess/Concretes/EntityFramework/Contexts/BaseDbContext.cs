@@ -12,7 +12,7 @@ using Entities.Concretes;
 
 namespace DataAccess.Concretes.EntityFramework.Contexts
 {
-    public class BaseDbContext:DbContext
+    public class BaseDbContext : DbContext
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<User> Users { get; set; }

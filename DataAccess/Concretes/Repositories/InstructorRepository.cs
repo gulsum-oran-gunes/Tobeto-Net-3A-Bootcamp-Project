@@ -1,4 +1,7 @@
-﻿using DataAccess.Abstracts;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstracts;
+using DataAccess.Concretes.EntityFramework.Contexts;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concretes.Repositories
 {
-    public class InstructorRepository : IInstructorRepository
+    public class InstructorRepository : EfRepositoryBase<Instructor, int, BaseDbContext>, IInstructorRepository
     {
+        public InstructorRepository(BaseDbContext context) : base(context)
+        {
+        }
     }
 }

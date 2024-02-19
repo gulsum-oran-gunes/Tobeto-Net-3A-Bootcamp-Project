@@ -15,8 +15,9 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
         {
            
             builder.ToTable("Applicants");
+            builder.HasBaseType<User>();
             builder.Property(x => x.About).HasColumnName("About");
-            builder.HasOne<User>().WithOne().HasForeignKey<Applicant>(a => a.Id);
+           
 
            
 

@@ -1,4 +1,5 @@
-﻿using Entities.Concretes;
+﻿using Core.DataAccess;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstracts
 {
-    public interface IApplicantRepository
+    public interface IApplicantRepository:IAsyncRepository<Applicant,int>
     {
-        List<Applicant> GetAll();
-        void Add(Applicant applicant);
+       
     }
+
+   
+    
 }

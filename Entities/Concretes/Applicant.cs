@@ -11,5 +11,15 @@ namespace Entities.Concretes
     {
        
         public string About {  get; set; }
+        public Applicant()
+        {
+
+        }
+    
+        public Applicant(string about)
+        {
+
+            About = about;
+        }
     }
 }

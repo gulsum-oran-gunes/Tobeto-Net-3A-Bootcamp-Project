@@ -14,8 +14,7 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Instructor> builder)
         {
             builder.ToTable("Instructors");
-            builder.HasOne<User>().WithOne().HasForeignKey<Instructor>(a => a.Id);
-
+            builder.HasBaseType<User>(); 
             builder.Property(x => x.CompanyName).HasColumnName("CompanyName");
         }
     }
