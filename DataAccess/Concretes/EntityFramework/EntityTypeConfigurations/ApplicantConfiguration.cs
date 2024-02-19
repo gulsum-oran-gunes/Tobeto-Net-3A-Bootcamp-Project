@@ -15,7 +15,8 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
         {
            
             builder.ToTable("Applicants");
-            builder.HasBaseType<User>();
+            builder.Property(x => x.Id).HasColumnName("Id");
+
             builder.Property(x => x.About).HasColumnName("About");
            
 

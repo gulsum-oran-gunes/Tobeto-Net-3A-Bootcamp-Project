@@ -22,7 +22,7 @@ namespace Business.Concretes
         public async Task<List<GetAllApplicantResponse>> GetAll()
         {
             List<GetAllApplicantResponse> applicants = new List<GetAllApplicantResponse>();
-            foreach (var applicant in await _applicantRepository.GetAll())
+            foreach (var applicant in await _applicantRepository.GetAllAsync())
             {
                 GetAllApplicantResponse response = new();
 
@@ -36,7 +36,7 @@ namespace Business.Concretes
         public async Task<GetByIdApplicantResponse> GetById(int id)
         {
             GetByIdApplicantResponse response = new();
-            Applicant applicant = await _applicantRepository.Get(x => x.Id == id);
+            Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == id);
             response.Id  = applicant.Id;
             response.About = applicant.About;
             return response;
@@ -50,11 +50,12 @@ namespace Business.Concretes
             applicant.Password = request.Password;
             applicant.Email = request.Email;
             applicant.DateOfBirth = request.DateOfBirth;
+            applicant.NationalIdentity = request.NationalIdentity;
             applicant.FirstName = request.FirstName;
             applicant.LastName = request.LastName;
             applicant.About = request.About;
 
-            await _applicantRepository.Add(applicant);
+            await _applicantRepository.AddAsync(applicant);
 
             CreateApplicantResponse response = new();
             response.Id = applicant.Id;
@@ -65,10 +66,10 @@ namespace Business.Concretes
 
         public async Task<DeleteApplicantResponse> DeleteAsync(DeleteApplicantRequest request)
         {
-            Applicant applicant = await _applicantRepository.Get(x => x.Id == request.Id);
+            Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == request.Id);
 
             applicant.Id = request.Id;
-            await _applicantRepository.Delete(applicant);
+            await _applicantRepository.DeleteAsync(applicant);
 
             DeleteApplicantResponse response = new DeleteApplicantResponse(); 
             
@@ -79,13 +80,27 @@ namespace Business.Concretes
 
         public async Task<UpdateApplicantResponse> UpdateAsync(UpdateApplicantRequest request)
         {
-            Applicant applicant = await _applicantRepository.Get(x => x.Id == request.Id);
+            Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == request.Id);
             applicant.Id = request.Id;
+            applicant.UserName = request.UserName;
+            applicant.Password = request.Password;
+            applicant.Email = request.Email;
+            applicant.DateOfBirth = request.DateOfBirth;
+            applicant.NationalIdentity = request.NationalIdentity;
+            applicant.FirstName = request.FirstName;
+            applicant.LastName = request.LastName;
             applicant.About = request.About;
-            await _applicantRepository.Update(applicant);
+            await _applicantRepository.UpdateAsync(applicant);
 
             UpdateApplicantResponse response = new UpdateApplicantResponse();
             response.Id = applicant.Id;
+            response.UserName = applicant.UserName;
+            response.FirstName = applicant.FirstName;
+            response.LastName = applicant.LastName;
+            response.DateOfBirth = applicant.DateOfBirth;
+            response.NationalIdentity = applicant.NationalIdentity;
+            response.Email = applicant.Email;
+            response.Password = applicant.Password;
             response.About = applicant.About;
             response.UpdatedDate = applicant.UpdatedDate;
             return response;

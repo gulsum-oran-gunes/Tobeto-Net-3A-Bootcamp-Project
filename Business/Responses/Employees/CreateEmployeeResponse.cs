@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Employees
 {
-    public class CreateEmployeeResponse :CreateUserResponse
+    public class CreateEmployeeResponse 
     {
+        public int Id { get; set; }
         public string Position { get; set; }
-        
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

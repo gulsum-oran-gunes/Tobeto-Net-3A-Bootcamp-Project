@@ -1,4 +1,4 @@
-﻿using Business.Requests.Users;
+﻿
 using Business.Responses.Users;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Applicants
 {
-    public class DeleteApplicantResponse:DeleteUserResponse
+    public class DeleteApplicantResponse
 
-    {
-       
+    { 
+        public int Id { get; set; }
+        public DateTime DeletedDate { get; set; } = DateTime.Now;
+
     }
 }

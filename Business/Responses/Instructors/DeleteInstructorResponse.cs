@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Instructors
 {
-    public class DeleteInstructorResponse :DeleteUserResponse
+    public class DeleteInstructorResponse 
     {
-        public string CompanyName { get; set; }
+        public int Id { get; set; }
+        public DateTime DeletedDate { get; set; } = DateTime.Now;
 
-        
+
     }
 }

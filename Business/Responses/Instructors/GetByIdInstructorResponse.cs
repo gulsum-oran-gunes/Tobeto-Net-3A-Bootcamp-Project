@@ -9,7 +9,7 @@ namespace Business.Responses.Instructors
 {
     public class GetByIdInstructorResponse :GetByIdUserResponse
     {
-       
+       public int Id { get; set; }
         public string CompanyName { get; set; }
     }
 }

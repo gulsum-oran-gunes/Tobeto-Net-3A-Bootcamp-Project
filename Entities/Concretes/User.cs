@@ -18,14 +18,14 @@ namespace Entities.Concretes
 
         public DateTime DateOfBirth { get; set; }
 
-        public int NationalIdentity { get; set; }
+        public string NationalIdentity { get; set; }
 
         public string Email { get; set; }
         public string Password { get; set; }
         public User()
         {
         }
-        public User(string userName, string firstName, string lastName, DateTime dateOfBirth, int nationalIdentity, string email, string password)
+        public User(string userName, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password)
         {
             UserName = userName;
             FirstName = firstName;

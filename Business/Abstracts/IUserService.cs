@@ -1,4 +1,4 @@
-﻿using Business.Requests.Users;
+﻿
 using Business.Responses.Users;
 using Entities.Concretes;
 using System;
@@ -13,8 +13,6 @@ namespace Business.Abstracts
     {
         Task<List<GetAllUserResponse>> GetAll();
         Task<GetByIdUserResponse> GetById(int id);
-        Task<CreateUserResponse> AddAsync(CreateUserRequest request);
-        Task<DeleteUserResponse> DeleteAsync(DeleteUserRequest request);
-        Task<UpdateUserResponse> UpdateAsync(UpdateUserRequest request);
+       
     }
 }

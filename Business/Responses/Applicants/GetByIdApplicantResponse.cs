@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Applicants
 {
-    public class GetByIdApplicantResponse:GetByIdUserResponse
+    public class GetByIdApplicantResponse
     {
-
+        public int Id {  get; set; }
         public string About { get; set; }
+        
+            
     }
 }

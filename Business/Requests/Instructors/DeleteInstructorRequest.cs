@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Business.Requests.Instructors
 {
-    public class DeleteInstructorRequest : DeleteUserResponse
+    public class DeleteInstructorRequest 
     {
-       
+       public int Id { get; set; }
     }
 }

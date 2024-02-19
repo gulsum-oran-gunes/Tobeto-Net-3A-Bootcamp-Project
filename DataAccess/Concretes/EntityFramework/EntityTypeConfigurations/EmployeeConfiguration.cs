@@ -14,7 +14,8 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
             builder.ToTable("Employees");
-            builder.HasBaseType<User>();
+            builder.Property(x => x.Id).HasColumnName("Id");
+
             builder.Property(x => x.Position).HasColumnName("Position");
 
         }

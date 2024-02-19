@@ -1,5 +1,5 @@
 ﻿using Business.Abstracts;
-using Business.Requests.Users;
+
 using Business.Responses.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,34 +18,19 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _userService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             return Ok(await _userService.GetById(id));
         }
 
-        [HttpPost]
-        public async Task<CreateUserResponse> AddAsync(CreateUserRequest request)
-        {
-            return await _userService.AddAsync(request);
-        }
+        
 
-        [HttpDelete]
-        public async Task<DeleteUserResponse> DeleteAsync(DeleteUserRequest request)
-        {
-            return await _userService.DeleteAsync(request);
-        }
 
-        [HttpPut]
-        public async Task<UpdateUserResponse> UpdateAsync(UpdateUserRequest request)
-        {
-            return await _userService.UpdateAsync(request);
-        }
-
-    }
+    } 
 }

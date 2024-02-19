@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Employees
 {
-    public class DeleteEmployeeResponse :DeleteUserResponse
+    public class DeleteEmployeeResponse 
     {
-       
+        public int Id { get; set; }
+        public DateTime DeletedDate { get; set; } = DateTime.Now;
     }
 }

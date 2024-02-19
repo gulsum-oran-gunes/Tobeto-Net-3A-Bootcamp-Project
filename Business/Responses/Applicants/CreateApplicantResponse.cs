@@ -1,4 +1,4 @@
-﻿using Business.Responses.Users;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Business.Responses.Applicants
 {
-    public class CreateApplicantResponse:CreateUserResponse
+    public class CreateApplicantResponse
     {
-       
+        public int Id { get; set; }
         public string About { get; set; }
-        
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
     }
 }

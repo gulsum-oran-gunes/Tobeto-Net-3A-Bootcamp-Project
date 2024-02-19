@@ -1,4 +1,4 @@
-﻿using Business.Requests.Users;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business.Requests.Applicants
 {
-    public class DeleteApplicantRequest:DeleteUserRequest
+    public class DeleteApplicantRequest
     {
+        public int Id { get; set; }
        
     }
 }
