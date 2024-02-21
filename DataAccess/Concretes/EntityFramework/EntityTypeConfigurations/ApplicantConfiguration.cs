@@ -18,9 +18,9 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.Property(x => x.Id).HasColumnName("Id");
 
             builder.Property(x => x.About).HasColumnName("About");
-           
 
-           
+            builder.HasMany(x => x.Applications);
+
 
         }
     }

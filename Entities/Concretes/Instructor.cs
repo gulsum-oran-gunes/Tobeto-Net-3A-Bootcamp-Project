@@ -10,9 +10,11 @@ namespace Entities.Concretes
     {
         public string CompanyName { get; set; }
 
+        public ICollection<Bootcamp> Bootcamps{ get; set; }
+
         public Instructor()
         {
-            
+            Bootcamps = new HashSet<Bootcamp>();
         }
 
         public Instructor(string companyName)

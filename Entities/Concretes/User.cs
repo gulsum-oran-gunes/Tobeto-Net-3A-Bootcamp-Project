@@ -9,7 +9,7 @@ namespace Entities.Concretes
 {
     public class User : BaseEntity<int>
     {
-        public int Id { get; set; }
+       
         public string  UserName { get; set; }
 
         public string FirstName { get; set; }
@@ -25,7 +25,7 @@ namespace Entities.Concretes
         public User()
         {
         }
-        public User(string userName, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password)
+        public User(int id,string userName, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password)
         {
             UserName = userName;
             FirstName = firstName;
@@ -34,6 +34,7 @@ namespace Entities.Concretes
             NationalIdentity = nationalIdentity;
             Email = email;
             Password = password;
+            Id = id;
         }
     }
 }
