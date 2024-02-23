@@ -56,6 +56,7 @@ namespace Business.Concretes
         public async Task<IDataResult<UpdateEmployeeResponse>> UpdateAsync(UpdateEmployeeRequest request)
         {
             Employee employee = await _employeeRepository.GetAsync(x => x.Id == request.Id);
+            employee = _mapper.Map(request, employee);
             await _employeeRepository.UpdateAsync(employee);
             UpdateEmployeeResponse response = _mapper.Map<UpdateEmployeeResponse>(employee);
             return new SuccessDataResult<UpdateEmployeeResponse>(response, "Güncelleme İşlemi Başarılı");

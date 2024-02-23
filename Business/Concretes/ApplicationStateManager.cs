@@ -53,6 +53,7 @@ namespace Business.Concretes
         public async Task<IDataResult<UpdateApplicationStateResponse>> UpdateAsync(UpdateApplicationStateRequest request)
         {
             ApplicationState applicationState = await _applicationStateRepository.GetAsync(x => x.Id == request.Id);
+            applicationState = _mapper.Map(request, applicationState);
             await _applicationStateRepository.UpdateAsync(applicationState);
             UpdateApplicationStateResponse response = _mapper.Map<UpdateApplicationStateResponse>(applicationState);
             return new SuccessDataResult<UpdateApplicationStateResponse>(response, "Güncelleme İşlemi Başarılı");

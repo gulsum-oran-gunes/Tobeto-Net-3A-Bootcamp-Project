@@ -56,9 +56,12 @@ namespace Business.Concretes
             await _applicantRepository.DeleteAsync(applicant);
             return new SuccessResult("Silme İşlemi Başarılı");
         }
+
+        
         public async Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request)
         {
             Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == request.Id);
+            applicant = _mapper.Map(request, applicant);
             await _applicantRepository.UpdateAsync(applicant);
             UpdateApplicantResponse response = _mapper.Map<UpdateApplicantResponse>(applicant);
             return new SuccessDataResult<UpdateApplicantResponse>(response, "Güncelleme İşlemi Başarılı");

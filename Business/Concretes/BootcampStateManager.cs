@@ -53,6 +53,7 @@ namespace Business.Concretes
         public async Task<IDataResult<UpdateBootcampStateResponse>> UpdateAsync(UpdateBootcampStateRequest request)
         {
             BootcampState bootcampState = await _bootcampStateRepository.GetAsync(x => x.Id == request.Id);
+            bootcampState = _mapper.Map(request, bootcampState);
             await _bootcampStateRepository.UpdateAsync(bootcampState);
             UpdateBootcampStateResponse response = _mapper.Map<UpdateBootcampStateResponse>(bootcampState);
             return new SuccessDataResult<UpdateBootcampStateResponse>(response, "Güncelleme İşlemi Başarılı");
