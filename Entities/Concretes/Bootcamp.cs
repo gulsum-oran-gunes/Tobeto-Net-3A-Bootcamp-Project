@@ -14,8 +14,8 @@ namespace Entities.Concretes
         public int BootcampStateId {  get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public virtual Instructor? Instructor { get; set; }
-        public virtual BootcampState? BootcampState { get; set; }
+        public virtual Instructor Instructor { get; set; }
+        public virtual BootcampState BootcampState { get; set; }
         public ICollection<Application> Applications { get; set; }
         public Bootcamp()
         {

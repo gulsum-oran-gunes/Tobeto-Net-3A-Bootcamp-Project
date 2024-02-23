@@ -1,5 +1,6 @@
 ﻿
 using Business.Responses.Users;
+using Core.Utilities.Results;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace Business.Abstracts
 {
     public interface IUserService
     {
-        Task<List<GetAllUserResponse>> GetAll();
-        Task<GetByIdUserResponse> GetById(int id);
+        Task<IDataResult<List<GetAllUserResponse>>> GetAllAsync();
+        Task<IDataResult<GetByIdUserResponse>>GetByIdAsync(int id);
        
     }
 }

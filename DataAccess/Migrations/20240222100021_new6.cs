@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class new3 : Migration
+    public partial class new6 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -188,9 +188,10 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Applications_ApplicantId",
+                name: "IX_Applications_ApplicantId_BootcampId_ApplicationStateId",
                 table: "Applications",
-                column: "ApplicantId");
+                columns: new[] { "ApplicantId", "BootcampId", "ApplicationStateId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_ApplicationStateId",

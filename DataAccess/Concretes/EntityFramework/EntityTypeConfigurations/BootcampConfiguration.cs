@@ -24,6 +24,7 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.Property(x => x.UpdatedDate).HasColumnName("UpdatedDate");
             builder.Property(x => x.DeletedDate).HasColumnName("DeletedDate");
 
+
             builder.HasOne(x => x.Instructor);
             builder.HasOne(x => x.BootcampState);
             builder.HasMany(x => x.Applications);

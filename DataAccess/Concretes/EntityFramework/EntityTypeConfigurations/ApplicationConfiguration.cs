@@ -26,7 +26,9 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
             builder.HasOne(x => x.Bootcamp);
             builder.HasOne(x => x.Applicant);
             builder.HasOne(x => x.ApplicationState);
-            
+
+            builder.HasIndex(x => new { x.ApplicantId, x.BootcampId, x.ApplicationStateId }).IsUnique();
+
         }
 
         

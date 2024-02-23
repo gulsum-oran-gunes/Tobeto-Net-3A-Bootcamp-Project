@@ -57,11 +57,12 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
-
                     b.HasIndex("ApplicationStateId");
 
                     b.HasIndex("BootcampId");
+
+                    b.HasIndex("ApplicantId", "BootcampId", "ApplicationStateId")
+                        .IsUnique();
 
                     b.ToTable("Applications", (string)null);
                 });
@@ -76,12 +77,10 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -89,8 +88,7 @@ namespace DataAccess.Migrations
                         .HasColumnName("Name");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -158,12 +156,10 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -171,8 +167,7 @@ namespace DataAccess.Migrations
                         .HasColumnName("Name");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

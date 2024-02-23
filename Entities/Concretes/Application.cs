@@ -14,10 +14,10 @@ namespace Entities.Concretes
         public int BootcampId { get; set; }
         public int ApplicationStateId { get; set; }
 
-        public virtual Bootcamp? Bootcamp{ get; set; }
-        public virtual Applicant? Applicant { get; set; }
+        public virtual Bootcamp Bootcamp{ get; set; }
+        public virtual Applicant Applicant { get; set; }
 
-        public virtual ApplicationState? ApplicationState { get; set; }
+        public virtual ApplicationState ApplicationState { get; set; }
 
         public Application()
         {

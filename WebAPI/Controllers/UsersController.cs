@@ -1,6 +1,7 @@
 ﻿using Business.Abstracts;
 
 using Business.Responses.Users;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,13 +21,13 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _userService.GetAll());
+            return Ok(await _userService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _userService.GetById(id));
+            return Ok(await _userService.GetByIdAsync(id));
         }
 
         

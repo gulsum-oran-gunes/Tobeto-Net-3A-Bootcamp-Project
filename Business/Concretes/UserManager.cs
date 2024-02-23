@@ -1,5 +1,8 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Business.Responses.Users;
+using Business.Responses.Users;
+using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.Repositories;
 using Entities.Concretes;
@@ -14,39 +17,26 @@ namespace Business.Concretes
     public class UserManager : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        public UserManager(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserManager(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-        }
-       
-
-        
-
-        public async  Task<List<GetAllUserResponse>> GetAll()
-        {
-            List<GetAllUserResponse> users = new List<GetAllUserResponse>();
-
-            foreach (var user in await _userRepository.GetAllAsync())
-            {
-                GetAllUserResponse response = new GetAllUserResponse();
-                response.Id = user.Id;
-                response.UserName = user.UserName; 
-                users.Add(response);
-            }
-            return users;
+            _mapper = mapper;
         }
 
-        
-        public async Task<GetByIdUserResponse> GetById(int id)
+        public async Task<IDataResult<List<GetAllUserResponse>>> GetAllAsync()
         {
-            GetByIdUserResponse response = new GetByIdUserResponse();
+            List<User> users = await _userRepository.GetAllAsync();
+            List<GetAllUserResponse> responses = _mapper.Map<List<GetAllUserResponse>>(users);
+            return new SuccessDataResult<List<GetAllUserResponse>>(responses, "Listeleme İşlemi Başarılı");
+        }
+        public async Task<IDataResult<GetByIdUserResponse>> GetByIdAsync(int id)
+        {
             User user = await _userRepository.GetAsync(x => x.Id == id);
-            response.Id = user.Id;
-            response.UserName = user.UserName;   
-            return response;
+            GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
+            return new SuccessDataResult<GetByIdUserResponse>(response, "GetById İşlemi Başarılı");
         }
 
-        
+
     }
 }
