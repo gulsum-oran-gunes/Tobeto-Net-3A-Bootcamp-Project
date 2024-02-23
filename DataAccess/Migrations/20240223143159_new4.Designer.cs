@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240222100021_new6")]
-    partial class new6
+    [Migration("20240223143159_new4")]
+    partial class new4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,41 @@ namespace DataAccess.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Bootcamps", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Concretes.BootcampImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<int>("BootcampId")
+                        .HasColumnType("int")
+                        .HasColumnName("BootcampId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ImagePath");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BootcampId");
+
+                    b.ToTable("BootcampImages", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Concretes.BootcampState", b =>
@@ -321,6 +356,17 @@ namespace DataAccess.Migrations
                     b.Navigation("Instructor");
                 });
 
+            modelBuilder.Entity("Entities.Concretes.BootcampImage", b =>
+                {
+                    b.HasOne("Entities.Concretes.Bootcamp", "Bootcamp")
+                        .WithMany("BootcampImages")
+                        .HasForeignKey("BootcampId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bootcamp");
+                });
+
             modelBuilder.Entity("Entities.Concretes.Applicant", b =>
                 {
                     b.HasOne("Entities.Concretes.User", null)
@@ -356,6 +402,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concretes.Bootcamp", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("BootcampImages");
                 });
 
             modelBuilder.Entity("Entities.Concretes.BootcampState", b =>

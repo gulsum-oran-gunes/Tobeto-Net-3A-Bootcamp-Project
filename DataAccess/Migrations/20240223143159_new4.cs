@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class new6 : Migration
+    public partial class new4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -187,6 +187,28 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BootcampImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BootcampId = table.Column<int>(type: "int", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BootcampImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BootcampImages_Bootcamps_BootcampId",
+                        column: x => x.BootcampId,
+                        principalTable: "Bootcamps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_ApplicantId_BootcampId_ApplicationStateId",
                 table: "Applications",
@@ -201,6 +223,11 @@ namespace DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_BootcampId",
                 table: "Applications",
+                column: "BootcampId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BootcampImages_BootcampId",
+                table: "BootcampImages",
                 column: "BootcampId");
 
             migrationBuilder.CreateIndex(
@@ -219,6 +246,9 @@ namespace DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Applications");
+
+            migrationBuilder.DropTable(
+                name: "BootcampImages");
 
             migrationBuilder.DropTable(
                 name: "Employees");

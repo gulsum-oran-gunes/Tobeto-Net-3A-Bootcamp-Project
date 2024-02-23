@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationStatesController : ControllerBase
+    public class ApplicationStatesController : BaseController
     {
         private readonly IApplicationStateService _applicationStateService;
 
@@ -21,19 +21,19 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _applicationStateService.GetAllAsync());
+            return HandleDataResult(await _applicationStateService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _applicationStateService.GetByIdAsync(id));
+            return HandleDataResult(await _applicationStateService.GetByIdAsync(id));
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateApplicationStateResponse>> AddAsync(CreateApplicationStateRequest request)
+        public async Task<IActionResult> AddAsync(CreateApplicationStateRequest request)
         {
-            return await _applicationStateService.AddAsync(request);
+            return HandleDataResult (await _applicationStateService.AddAsync(request));
         }
 
         [HttpDelete]
@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateApplicationStateResponse>> UpdateAsync(UpdateApplicationStateRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateApplicationStateRequest request)
         {
-            return await _applicationStateService.UpdateAsync(request);
+            return HandleDataResult(await _applicationStateService.UpdateAsync(request));
         }
     }
 }

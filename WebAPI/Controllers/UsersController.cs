@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private readonly IUserService _userService;
 
@@ -21,13 +21,13 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _userService.GetAllAsync());
+            return HandleDataResult(await _userService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _userService.GetByIdAsync(id));
+            return HandleDataResult(await _userService.GetByIdAsync(id));
         }
 
         

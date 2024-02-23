@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationsController : ControllerBase
+    public class ApplicationsController : BaseController
     {
         private readonly IApplicationService _applicationService;
 
@@ -21,19 +21,19 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _applicationService.GetAllAsync());
+            return HandleDataResult(await _applicationService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _applicationService.GetByIdAsync(id));
+            return HandleDataResult(await _applicationService.GetByIdAsync(id));
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateApplicationResponse>> AddAsync(CreateApplicationRequest request)
+        public async Task<IActionResult> AddAsync(CreateApplicationRequest request)
         {
-            return await _applicationService.AddAsync(request);
+            return HandleDataResult(await _applicationService.AddAsync(request));
         }
 
         [HttpDelete]
@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateApplicationResponse>> UpdateAsync(UpdateApplicationRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateApplicationRequest request)
         {
-            return await _applicationService.UpdateAsync(request);
+            return HandleDataResult (await _applicationService.UpdateAsync(request));
         }
     }
 }

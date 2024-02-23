@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstructorsController : ControllerBase
+    public class InstructorsController : BaseController 
     {
         private readonly IInstructorService _instructorService;
 
@@ -23,19 +23,19 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _instructorService.GetAllAsync());
+            return HandleDataResult(await _instructorService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _instructorService.GetByIdAsync(id));
+            return HandleDataResult(await _instructorService.GetByIdAsync(id));
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateInstructorResponse>> AddAsync(CreateInstructorRequest request)
+        public async Task<IActionResult> AddAsync(CreateInstructorRequest request)
         {
-            return await _instructorService.AddAsync(request);
+            return HandleDataResult(await _instructorService.AddAsync(request));
         }
 
         [HttpDelete]
@@ -45,9 +45,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateInstructorResponse>> UpdateAsync(UpdateInstructorRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateInstructorRequest request)
         {
-            return await _instructorService.UpdateAsync(request);
+            return HandleDataResult(await _instructorService.UpdateAsync(request));
         }
     }
 }
