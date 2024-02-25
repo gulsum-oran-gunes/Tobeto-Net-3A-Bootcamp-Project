@@ -45,11 +45,11 @@ namespace Business.Concretes
         return new SuccessDataResult<CreateApplicationResponse>(response, "Ekleme İşlemi Başarılı");
     }
 
-    public async Task<IResult> DeleteAsync(DeleteApplicationRequest request)
+    public async Task<IResult<DeleteApplicationResponse>> DeleteAsync(DeleteApplicationRequest request)
     {
         Application application = await _applicationRepository.GetAsync(x => x.Id == request.Id);
         await _applicationRepository.DeleteAsync(application);
-        return new SuccessResult("Silme İşlemi Başarılı");
+        return new SuccessResult<DeleteApplicationResponse>("Silme İşlemi Başarılı");
     }
     public async Task<IDataResult<UpdateApplicationResponse>> UpdateAsync(UpdateApplicationRequest request)
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Results
 {
-    public interface IResult
+    public interface IResult<T>
     {
         bool Success { get; }
         string Message { get; }

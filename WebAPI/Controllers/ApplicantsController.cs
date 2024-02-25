@@ -4,9 +4,9 @@ using Business.Responses.Applicants;
 using Business.Responses.Applications;
 using Business.Responses.ApplicationStates;
 using Core.Utilities.Results;
+using Entities.Concretes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using IResult = Core.Utilities.Results.IResult;
 
 namespace WebAPI.Controllers
 {
@@ -41,9 +41,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IResult>DeleteAsync(DeleteApplicantRequest request)
+        public async Task<IActionResult> DeleteAsync(DeleteApplicantRequest request)
         {
-            return await _applicantService.DeleteAsync(request);
+            return HandleResult(await _applicantService.DeleteAsync(request));
         }
 
         [HttpPut]

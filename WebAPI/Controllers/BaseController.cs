@@ -12,7 +12,10 @@ namespace WebAPI.Controllers
             return dataResult.Success ? Ok(dataResult) : BadRequest(dataResult);
         }
 
-       
+        public IActionResult HandleResult<T>(Core.Utilities.Results.IResult<T> result)
+        {
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
 
 
     }

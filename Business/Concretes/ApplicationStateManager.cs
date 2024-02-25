@@ -44,11 +44,11 @@ namespace Business.Concretes
             return new SuccessDataResult<CreateApplicationStateResponse>(response, "Ekleme İşlemi Başarılı");
         }
 
-        public async Task<IResult> DeleteAsync(DeleteApplicationStateRequest request)
+        public async Task<IResult<DeleteApplicationStateResponse>> DeleteAsync(DeleteApplicationStateRequest request)
         {
             ApplicationState applicationState = await _applicationStateRepository.GetAsync(x => x.Id == request.Id);
             await _applicationStateRepository.DeleteAsync(applicationState);
-            return new SuccessResult("Silme İşlemi Başarılı");
+            return new SuccessResult<DeleteApplicationStateResponse>("Silme İşlemi Başarılı");
         }
         public async Task<IDataResult<UpdateApplicationStateResponse>> UpdateAsync(UpdateApplicationStateRequest request)
         {

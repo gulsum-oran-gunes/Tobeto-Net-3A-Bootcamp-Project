@@ -44,11 +44,11 @@ namespace Business.Concretes
             return new SuccessDataResult<CreateBootcampStateResponse>(response, "Ekleme İşlemi Başarılı");
         }
 
-        public async Task<IResult> DeleteAsync(DeleteBootcampStateRequest request)
+        public async Task<IResult<DeleteBootcampStateResponse>> DeleteAsync(DeleteBootcampStateRequest request)
         {
             BootcampState bootcampState = await _bootcampStateRepository.GetAsync(x => x.Id == request.Id);
             await _bootcampStateRepository.DeleteAsync(bootcampState);
-            return new SuccessResult("Silme İşlemi Başarılı");
+            return new SuccessResult<DeleteBootcampStateResponse>("Silme İşlemi Başarılı");
         }
         public async Task<IDataResult<UpdateBootcampStateResponse>> UpdateAsync(UpdateBootcampStateRequest request)
         {
