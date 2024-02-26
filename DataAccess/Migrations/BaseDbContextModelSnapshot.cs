@@ -95,6 +95,35 @@ namespace DataAccess.Migrations
                     b.ToTable("ApplicationStates", (string)null);
                 });
 
+            modelBuilder.Entity("Entities.Concretes.Blacklist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicantId")
+                        .HasColumnType("int")
+                        .HasColumnName("ApplicantId");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Date");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Reason");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.ToTable("Blacklists", (string)null);
+                });
+
             modelBuilder.Entity("Entities.Concretes.Bootcamp", b =>
                 {
                     b.Property<int>("Id")
@@ -332,6 +361,17 @@ namespace DataAccess.Migrations
                     b.Navigation("ApplicationState");
 
                     b.Navigation("Bootcamp");
+                });
+
+            modelBuilder.Entity("Entities.Concretes.Blacklist", b =>
+                {
+                    b.HasOne("Entities.Concretes.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Applicant");
                 });
 
             modelBuilder.Entity("Entities.Concretes.Bootcamp", b =>

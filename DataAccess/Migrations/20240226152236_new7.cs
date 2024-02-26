@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class new4 : Migration
+    public partial class new7 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -120,6 +120,27 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blacklists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicantId = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blacklists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blacklists_Applicants_ApplicantId",
+                        column: x => x.ApplicantId,
+                        principalTable: "Applicants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bootcamps",
                 columns: table => new
                 {
@@ -226,6 +247,11 @@ namespace DataAccess.Migrations
                 column: "BootcampId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Blacklists_ApplicantId",
+                table: "Blacklists",
+                column: "ApplicantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BootcampImages_BootcampId",
                 table: "BootcampImages",
                 column: "BootcampId");
@@ -248,16 +274,19 @@ namespace DataAccess.Migrations
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "Blacklists");
+
+            migrationBuilder.DropTable(
                 name: "BootcampImages");
 
             migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Applicants");
+                name: "ApplicationStates");
 
             migrationBuilder.DropTable(
-                name: "ApplicationStates");
+                name: "Applicants");
 
             migrationBuilder.DropTable(
                 name: "Bootcamps");

@@ -41,9 +41,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IResult>DeleteAsync(DeleteApplicantRequest request)
+        public async Task<IActionResult>DeleteAsync(DeleteApplicantRequest request)
         {
-            return await _applicantService.DeleteAsync(request);
+            return HandleResult(await _applicantService.DeleteAsync(request));
         }
 
         [HttpPut]

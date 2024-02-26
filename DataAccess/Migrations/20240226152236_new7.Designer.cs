@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240223143159_new4")]
-    partial class new4
+    [Migration("20240226152236_new7")]
+    partial class new7
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,35 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationStates", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Concretes.Blacklist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicantId")
+                        .HasColumnType("int")
+                        .HasColumnName("ApplicantId");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Date");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Reason");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.ToTable("Blacklists", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Concretes.Bootcamp", b =>
@@ -335,6 +364,17 @@ namespace DataAccess.Migrations
                     b.Navigation("ApplicationState");
 
                     b.Navigation("Bootcamp");
+                });
+
+            modelBuilder.Entity("Entities.Concretes.Blacklist", b =>
+                {
+                    b.HasOne("Entities.Concretes.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Applicant");
                 });
 
             modelBuilder.Entity("Entities.Concretes.Bootcamp", b =>

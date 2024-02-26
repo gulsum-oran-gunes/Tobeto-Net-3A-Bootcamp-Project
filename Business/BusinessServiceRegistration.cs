@@ -23,6 +23,7 @@ namespace Business
             services.AddScoped<IApplicationStateService, ApplicationStateManager>();
             services.AddScoped<IBootcampService, BootcampManager>();
             services.AddScoped<IBootcampStateService, BootcampStateManager>();
+            services.AddScoped<IBlacklistService, BlacklistManager>();
             return services;
         }
     }
