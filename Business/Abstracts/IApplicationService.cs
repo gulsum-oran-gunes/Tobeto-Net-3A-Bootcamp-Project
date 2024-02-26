@@ -14,7 +14,7 @@ namespace Business.Abstracts
      Task<IDataResult<List<GetAllApplicationResponse>>> GetAllAsync();
     Task<IDataResult<GetByIdApplicationResponse> >GetByIdAsync(int id);
     Task<IDataResult<CreateApplicationResponse>> AddAsync(CreateApplicationRequest request);
-    Task<IResult<DeleteApplicationResponse>> DeleteAsync(DeleteApplicationRequest request);
+    Task<IResult> DeleteAsync(DeleteApplicationRequest request);
     Task<IDataResult<UpdateApplicationResponse>> UpdateAsync(UpdateApplicationRequest request); 
     }
    

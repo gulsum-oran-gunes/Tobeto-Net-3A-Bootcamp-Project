@@ -48,11 +48,11 @@ namespace Business.Concretes
             return new SuccessDataResult<CreateInstructorResponse>(response, "Ekleme İşlemi Başarılı");
         }
 
-        public async Task<IResult<DeleteInstructorResponse>> DeleteAsync(DeleteInstructorRequest request)
+        public async Task<IResult> DeleteAsync(DeleteInstructorRequest request)
         {
             Instructor instructor = await _instructorRepository.GetAsync(x => x.Id == request.Id);
             await _instructorRepository.DeleteAsync(instructor);
-            return new SuccessResult<DeleteInstructorResponse>("Silme İşlemi Başarılı");
+            return new SuccessResult("Silme İşlemi Başarılı");
         }
         public async Task<IDataResult<UpdateInstructorResponse>> UpdateAsync(UpdateInstructorRequest request)
         {

@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteAsync(DeleteBootcampStateRequest request)
+        public async Task<Core.Utilities.Results.IResult> DeleteAsync(DeleteBootcampStateRequest request)
         {
-            return HandleResult(await _bootcampStateService.DeleteAsync(request));
+            return await _bootcampStateService.DeleteAsync(request);
         }
 
         [HttpPut]

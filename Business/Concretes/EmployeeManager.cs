@@ -47,11 +47,11 @@ namespace Business.Concretes
             return new SuccessDataResult<CreateEmployeeResponse>(response, "Ekleme İşlemi Başarılı");
         }
 
-        public async Task<IResult<DeleteEmployeeResponse>> DeleteAsync(DeleteEmployeeRequest request)
+        public async Task<IResult> DeleteAsync(DeleteEmployeeRequest request)
         {
             Employee employee = await _employeeRepository.GetAsync(x => x.Id == request.Id);
             await _employeeRepository.DeleteAsync(employee);
-            return new SuccessResult<DeleteEmployeeResponse>("Silme İşlemi Başarılı");
+            return new SuccessResult("Silme İşlemi Başarılı");
         }
         public async Task<IDataResult<UpdateEmployeeResponse>> UpdateAsync(UpdateEmployeeRequest request)
         {
