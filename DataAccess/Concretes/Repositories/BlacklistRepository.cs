@@ -2,6 +2,7 @@
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework.Contexts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace DataAccess.Concretes.Repositories
     {
         public BlacklistRepository(BaseDbContext context) : base(context)
         {
+        }
+        public async Task<bool> IsApplicantBlacklistedAsync(int applicantId)
+        {
+            return await Context.Set<Blacklist>().AnyAsync(b => b.ApplicantId == applicantId);
         }
     }
 }

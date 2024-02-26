@@ -4,6 +4,7 @@ using Business.Requests.Applications;
 using Business.Responses.Applications;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
+using DataAccess.Concretes.Repositories;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,10 +19,12 @@ namespace Business.Concretes
     {
     private readonly IApplicationRepository _applicationRepository;
     private readonly IMapper _mapper;
-    public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper)
+        private readonly IBlacklistRepository _blacklistRepository;
+    public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper, IBlacklistRepository blacklistRepository)
     {
         _applicationRepository = applicationRepository;
         _mapper = mapper;
+            _blacklistRepository = blacklistRepository;
     }
 
     public async Task<IDataResult<List<GetAllApplicationResponse>>> GetAllAsync()
@@ -38,7 +41,12 @@ namespace Business.Concretes
     }
     public async Task<IDataResult<CreateApplicationResponse>> AddAsync(CreateApplicationRequest request)
     {
-        Application application = _mapper.Map<Application>(request);
+            bool isBlacklisted = await _blacklistRepository.IsApplicantBlacklistedAsync(request.ApplicantId);
+            if (isBlacklisted)
+            {
+                return new ErrorDataResult<CreateApplicationResponse>("Bu başvuru sahibi kara listede olduğu için başvuru oluşturulamaz.");
+            }
+            Application application = _mapper.Map<Application>(request);
         await _applicationRepository.AddAsync(application);
 
         CreateApplicationResponse response = _mapper.Map<CreateApplicationResponse>(application);
