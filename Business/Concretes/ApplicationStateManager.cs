@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Business.Abstracts;
 using Business.Requests.ApplicationStates;
 using Business.Responses.ApplicationStates;
+using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
+using DataAccess.Concretes.Repositories;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -31,6 +34,7 @@ namespace Business.Concretes
         }
         public async Task<IDataResult<GetByIdApplicationStateResponse>> GetByIdAsync(int id)
         {
+            await CheckIfIdNotExists(id);
             ApplicationState applicationState = await _applicationStateRepository.GetAsync(x => x.Id == id);
             GetByIdApplicationStateResponse response = _mapper.Map<GetByIdApplicationStateResponse>(applicationState);
             return new SuccessDataResult<GetByIdApplicationStateResponse>(response, "GetById İşlemi Başarılı");
@@ -46,19 +50,26 @@ namespace Business.Concretes
 
         public async Task<IResult> DeleteAsync(DeleteApplicationStateRequest request)
         {
+            await CheckIfIdNotExists(request.Id);
             ApplicationState applicationState = await _applicationStateRepository.GetAsync(x => x.Id == request.Id);
             await _applicationStateRepository.DeleteAsync(applicationState);
             return new SuccessResult("Silme İşlemi Başarılı");
         }
         public async Task<IDataResult<UpdateApplicationStateResponse>> UpdateAsync(UpdateApplicationStateRequest request)
         {
+            await CheckIfIdNotExists(request.Id);
             ApplicationState applicationState = await _applicationStateRepository.GetAsync(x => x.Id == request.Id);
             applicationState = _mapper.Map(request, applicationState);
             await _applicationStateRepository.UpdateAsync(applicationState);
             UpdateApplicationStateResponse response = _mapper.Map<UpdateApplicationStateResponse>(applicationState);
             return new SuccessDataResult<UpdateApplicationStateResponse>(response, "Güncelleme İşlemi Başarılı");
         }
+        private async Task CheckIfIdNotExists(int applicationStateId)
+        {
+            var isExists = await _applicationStateRepository.GetAsync(applicationState => applicationState.Id == applicationStateId);
+            if (isExists is null) throw new BusinessException("Id not exists");
 
+        }
 
     }
 }

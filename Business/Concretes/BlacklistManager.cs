@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Business.Abstracts;
 using Business.Requests.Blacklists;
 using Business.Responses.Applicants;
 using Business.Responses.Blacklists;
 using Business.Responses.Blacklists;
+using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.Repositories;
@@ -35,6 +37,7 @@ namespace Business.Concretes
         }
         public async Task<IDataResult<GetByIdBlacklistResponse>> GetByIdAsync(int id)
         {
+            await CheckIfIdNotExists(id);
             Blacklist blacklist = await _blacklistRepository.GetAsync(x => x.Id == id, include: x => x.Include(x => x.Applicant));
             GetByIdBlacklistResponse response = _mapper.Map<GetByIdBlacklistResponse>(blacklist);
             return new SuccessDataResult<GetByIdBlacklistResponse>(response, "GetById İşlemi Başarılı");
@@ -50,6 +53,7 @@ namespace Business.Concretes
 
         public async Task<IResult> DeleteAsync(DeleteBlacklistRequest request)
         {
+            await CheckIfIdNotExists(request.Id);
             Blacklist blacklist = await _blacklistRepository.GetAsync(x => x.Id == request.Id);
             await _blacklistRepository.DeleteAsync(blacklist);
             return new SuccessResult("Silme İşlemi Başarılı");
@@ -58,12 +62,21 @@ namespace Business.Concretes
 
         public async Task<IDataResult<UpdateBlacklistResponse>> UpdateAsync(UpdateBlacklistRequest request)
         {
+            await CheckIfIdNotExists(request.Id);
             Blacklist blacklist = await _blacklistRepository.GetAsync(x => x.Id == request.Id, include: x => x.Include(x => x.Applicant));
             blacklist = _mapper.Map(request, blacklist);
             await _blacklistRepository.UpdateAsync(blacklist);
             UpdateBlacklistResponse response = _mapper.Map<UpdateBlacklistResponse>(blacklist);
             return new SuccessDataResult<UpdateBlacklistResponse>(response, "Güncelleme İşlemi Başarılı");
         }
+        private async Task CheckIfIdNotExists(int blacklistId)
+        {
+            var isExists = await _blacklistRepository.GetAsync(blacklist => blacklist.Id == blacklistId);
+            if (isExists is null) throw new BusinessException("Id not exists");
+
+        }
+
+
     }
 
 

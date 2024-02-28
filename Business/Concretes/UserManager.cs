@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Business.Abstracts;
 using Business.Responses.Users;
 using Business.Responses.Users;
+using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.Repositories;
@@ -32,11 +34,17 @@ namespace Business.Concretes
         }
         public async Task<IDataResult<GetByIdUserResponse>> GetByIdAsync(int id)
         {
+            await CheckIfIdNotExists(id);
             User user = await _userRepository.GetAsync(x => x.Id == id);
             GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
             return new SuccessDataResult<GetByIdUserResponse>(response, "GetById İşlemi Başarılı");
         }
+        private async Task CheckIfIdNotExists(int userId)
+        {
+            var isExists = await _userRepository.GetAsync(x => x.Id == userId);
+            if (isExists is null) throw new BusinessException("Id not exists");
 
+        }
 
     }
 }

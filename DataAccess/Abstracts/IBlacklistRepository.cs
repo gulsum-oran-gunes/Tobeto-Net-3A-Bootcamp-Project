@@ -10,6 +10,6 @@ namespace DataAccess.Abstracts
 {
     public interface IBlacklistRepository :IAsyncRepository<Blacklist,int>, IRepository<Blacklist, int>
     {
-        Task<bool> IsApplicantBlacklistedAsync(int applicantId);
+        
     }
 }
