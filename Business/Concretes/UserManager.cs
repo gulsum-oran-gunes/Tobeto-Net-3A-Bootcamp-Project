@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using Business.Abstracts;
+using Business.Constants;
 using Business.Responses.Users;
 using Business.Responses.Users;
+using Business.Rules;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -20,31 +22,28 @@ namespace Business.Concretes
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserManager(IUserRepository userRepository, IMapper mapper)
+        private readonly UserBusinessRules _rules;
+        public UserManager(IUserRepository userRepository, IMapper mapper, UserBusinessRules rules)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _rules = rules;
         }
 
         public async Task<IDataResult<List<GetAllUserResponse>>> GetAllAsync()
         {
             List<User> users = await _userRepository.GetAllAsync();
             List<GetAllUserResponse> responses = _mapper.Map<List<GetAllUserResponse>>(users);
-            return new SuccessDataResult<List<GetAllUserResponse>>(responses, "Listeleme İşlemi Başarılı");
+            return new SuccessDataResult<List<GetAllUserResponse>>(responses, UserMessages.UserGetAll);
         }
         public async Task<IDataResult<GetByIdUserResponse>> GetByIdAsync(int id)
         {
-            await CheckIfIdNotExists(id);
+            await _rules.CheckIfIdNotExists(id);
             User user = await _userRepository.GetAsync(x => x.Id == id);
             GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
-            return new SuccessDataResult<GetByIdUserResponse>(response, "GetById İşlemi Başarılı");
+            return new SuccessDataResult<GetByIdUserResponse>(response, UserMessages.UserGetById);
         }
-        private async Task CheckIfIdNotExists(int userId)
-        {
-            var isExists = await _userRepository.GetAsync(x => x.Id == userId);
-            if (isExists is null) throw new BusinessException("Id not exists");
-
-        }
+       
 
     }
 }

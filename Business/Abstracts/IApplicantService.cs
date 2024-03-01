@@ -18,4 +18,5 @@ namespace Business.Abstracts
         Task<IResult> DeleteAsync(DeleteApplicantRequest request);
         Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request);
     }
+   
 }

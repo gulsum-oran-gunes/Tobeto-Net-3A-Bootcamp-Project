@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Azure.Core;
 using Business.Abstracts;
+using Business.Constants;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
 using Business.Responses.Applications;
 using Business.Responses.ApplicationStates;
+using Business.Rules;
 using Core.DataAccess;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
@@ -24,67 +26,57 @@ namespace Business.Concretes
     {
         private readonly IApplicantRepository _applicantRepository;
         private readonly IMapper _mapper;
-        public ApplicantManager(IApplicantRepository applicantRepository, IMapper mapper)
+        private readonly ApplicantBusinessRules _rules;
+        public ApplicantManager(IApplicantRepository applicantRepository, IMapper mapper, ApplicantBusinessRules rules)
         {
             _applicantRepository = applicantRepository;
             _mapper = mapper;
+            _rules = rules;
         }
 
         public async Task<IDataResult<List<GetAllApplicantResponse>>> GetAllAsync()
         {
             List<Applicant> applicants = await _applicantRepository.GetAllAsync();
             List<GetAllApplicantResponse> responses = _mapper.Map<List<GetAllApplicantResponse>>(applicants);
-            return new SuccessDataResult<List<GetAllApplicantResponse>>(responses, "Listeleme İşlemi Başarılı");
+            return new SuccessDataResult<List<GetAllApplicantResponse>>(responses, ApplicantMessages.ApplicantGetAll);
         }
         public async Task<IDataResult<GetByIdApplicantResponse>> GetByIdAsync(int id)
         {
-            await CheckIfIdNotExists(id);
+            await _rules.CheckIfIdNotExists(id);
             Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == id);
             GetByIdApplicantResponse response = _mapper.Map<GetByIdApplicantResponse>(applicant);
-            return new SuccessDataResult<GetByIdApplicantResponse>(response, "GetById İşlemi Başarılı");
+            return new SuccessDataResult<GetByIdApplicantResponse>(response, ApplicantMessages.ApplicantGetById);
         }
        public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
         {
-            await CheckIfApplicantNotExists(request.UserName, request.NationalIdentity);
+            await _rules.CheckIfApplicantNotExists(request.UserName, request.NationalIdentity);
             Applicant applicant = _mapper.Map<Applicant>(request);
             await _applicantRepository.AddAsync(applicant);
 
             CreateApplicantResponse response = _mapper.Map<CreateApplicantResponse>(applicant);
-            return new SuccessDataResult<CreateApplicantResponse>(response, "Ekleme İşlemi Başarılı");
+            return new SuccessDataResult<CreateApplicantResponse>(response, ApplicantMessages.ApplicantAdded);
         }
 
         public async Task<IResult>DeleteAsync(DeleteApplicantRequest request)
         {
-            await CheckIfIdNotExists(request.Id);
+            await _rules.CheckIfIdNotExists(request.Id);
             Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == request.Id);
             await _applicantRepository.DeleteAsync(applicant);
-            return new SuccessResult("Silme İşlemi Başarılı");
+            return new SuccessResult(ApplicantMessages.ApplicantDeleted);
         }
 
         
         public async Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request)
         {
-            await CheckIfIdNotExists(request.Id);
+            await _rules.CheckIfIdNotExists(request.Id);
             Applicant applicant = await _applicantRepository.GetAsync(x => x.Id == request.Id);
             applicant = _mapper.Map(request, applicant);
             await _applicantRepository.UpdateAsync(applicant);
             UpdateApplicantResponse response = _mapper.Map<UpdateApplicantResponse>(applicant);
-            return new SuccessDataResult<UpdateApplicantResponse>(response, "Güncelleme İşlemi Başarılı");
+            return new SuccessDataResult<UpdateApplicantResponse>(response, ApplicantMessages.ApplicantUpdated);
         }
 
-        private async Task CheckIfIdNotExists(int applicantId)
-        {
-            var isExists = await _applicantRepository.GetAsync(applicant => applicant.Id == applicantId);
-            if (isExists is null) throw new BusinessException("Id not exists");
-
-        }
-
-        private async Task CheckIfApplicantNotExists(string userName, string nationalIdentity)
-        {
-            var isExists = await _applicantRepository.GetAsync(applicant => applicant.UserName == userName  || applicant.NationalIdentity == nationalIdentity);
-            if (isExists is not null) throw new BusinessException("UserName or National Identity is already exists");
-
-        }
+        
 
     }
    
