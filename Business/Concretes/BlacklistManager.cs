@@ -74,13 +74,7 @@ namespace Business.Concretes
             return new SuccessDataResult<UpdateBlacklistResponse>(response, BlacklistMessages.BlacklistUpdated);
         }
 
-        public async Task<GetByIdBlacklistResponse> GetByApplicantId(int id)
-        {
-            await _rules.CheckIfIdNotExists(id);
-            Blacklist blacklist = await _blacklistRepository.GetAsync(x => x.Id == id, include: x => x.Include(x => x.Applicant));
-            GetByIdBlacklistResponse response = _mapper.Map<GetByIdBlacklistResponse>(blacklist);
-            return response;
-        }
+        
     }
 
 

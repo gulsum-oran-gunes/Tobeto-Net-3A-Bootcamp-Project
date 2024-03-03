@@ -31,19 +31,21 @@ namespace Business.Rules
             if (isExists is null) throw new BusinessException("Id not exists");
 
         }
-        //public async Task CheckIfBlacklist(int id)
-        //{
-        //   IDataResult<GetByIdBlacklistResponse> isBlacklisted = await _blacklistService.GetByIdAsync(id);
-        //    if (isBlacklisted is not null) throw new BusinessException("Bu başvuru sahibi kara listede olduğu için başvuru oluşturulamaz.");
-
-        //}
-
         public async Task CheckIfBlacklist(int id)
         {
-          var isBlacklisted = await _blacklistService.GetByApplicantId(id);
-          if (isBlacklisted is not null) throw new BusinessException("Bu başvuru sahibi kara listede olduğu için başvuru oluşturulamaz.");
-
+            try
+            {
+                IDataResult<GetByIdBlacklistResponse> isBlacklisted = await _blacklistService.GetByIdAsync(id);
+            } 
+            catch (BusinessException ex) 
+            {
+                return;
+            }
+            
+            throw new BusinessException("Application could not be created because this applicant is blacklisted.");
         }
+
+       
 
 
 
