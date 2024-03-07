@@ -5,6 +5,8 @@ using Business.Constants;
 using Business.Requests.ApplicationStates;
 using Business.Responses.ApplicationStates;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -43,6 +45,8 @@ namespace Business.Concretes
             GetByIdApplicationStateResponse response = _mapper.Map<GetByIdApplicationStateResponse>(applicationState);
             return new SuccessDataResult<GetByIdApplicationStateResponse>(response, ApplicationStateMessages.ApplicationStateGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateApplicationStateResponse>> AddAsync(CreateApplicationStateRequest request)
         {
             ApplicationState applicationState = _mapper.Map<ApplicationState>(request);

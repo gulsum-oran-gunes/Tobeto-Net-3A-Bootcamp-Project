@@ -6,6 +6,9 @@ using Business.Requests.Bootcamps;
 using Business.Responses.Bootcamps;
 using Business.Responses.Bootcamps;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.DataAccess;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -45,13 +48,14 @@ namespace Business.Concretes
             GetByIdBootcampResponse response = _mapper.Map<GetByIdBootcampResponse>(bootcamp);
             return new SuccessDataResult<GetByIdBootcampResponse>(response, BootcampMessages.BootcampGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateBootcampResponse>> AddAsync(CreateBootcampRequest request)
         {
-            await _rules.CheckIfOtherIdNotExists(request.BootcampStateId, request.InstructorId);
-            Bootcamp bootcamp = await _bootcampRepository.GetAsync(x => x.BootcampStateId == request.BootcampStateId || x.InstructorId == request.InstructorId);
-            bootcamp = _mapper.Map<Bootcamp>(request);
+            await _rules.CheckIfInstructorIdNotExists(request.InstructorId);
+            await _rules.CheckIfBootcampStateIdNotExists(request.BootcampStateId);
+            Bootcamp bootcamp = _mapper.Map<Bootcamp>(request);
             await _bootcampRepository.AddAsync(bootcamp);
-
             CreateBootcampResponse response = _mapper.Map<CreateBootcampResponse>(bootcamp);
             return new SuccessDataResult<CreateBootcampResponse>(response, BootcampMessages.BootcampAdded);
         }

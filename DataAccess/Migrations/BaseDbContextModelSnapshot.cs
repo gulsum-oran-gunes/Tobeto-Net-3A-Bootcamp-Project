@@ -57,12 +57,11 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicantId");
+
                     b.HasIndex("ApplicationStateId");
 
                     b.HasIndex("BootcampId");
-
-                    b.HasIndex("ApplicantId", "BootcampId", "ApplicationStateId")
-                        .IsUnique();
 
                     b.ToTable("Applications", (string)null);
                 });

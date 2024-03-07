@@ -13,7 +13,7 @@ namespace DataAccess.Concretes.EntityFramework.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Blacklist> builder)
         {
-            builder.ToTable("Blacklists").HasKey(x => x.Id); ;
+            builder.ToTable("Blacklists").HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("Id");
             builder.Property(x => x.ApplicantId).HasColumnName("ApplicantId");
             builder.Property(x => x.Reason).HasColumnName("Reason");

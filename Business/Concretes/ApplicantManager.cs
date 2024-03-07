@@ -7,6 +7,8 @@ using Business.Responses.Applicants;
 using Business.Responses.Applications;
 using Business.Responses.ApplicationStates;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.DataAccess;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
@@ -47,7 +49,9 @@ namespace Business.Concretes
             GetByIdApplicantResponse response = _mapper.Map<GetByIdApplicantResponse>(applicant);
             return new SuccessDataResult<GetByIdApplicantResponse>(response, ApplicantMessages.ApplicantGetById);
         }
-       public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
+
+        [LogAspect(typeof(MongoDbLogger))]
+        public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
         {
             await _rules.CheckIfApplicantNotExists(request.UserName, request.NationalIdentity);
             Applicant applicant = _mapper.Map<Applicant>(request);

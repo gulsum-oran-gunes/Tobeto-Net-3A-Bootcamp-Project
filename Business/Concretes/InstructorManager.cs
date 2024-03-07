@@ -6,6 +6,8 @@ using Business.Requests.Instructors;
 
 using Business.Responses.Instructors;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -45,6 +47,8 @@ namespace Business.Concretes
             GetByIdInstructorResponse response = _mapper.Map<GetByIdInstructorResponse>(instructor);
             return new SuccessDataResult<GetByIdInstructorResponse>(response, InstructorMessages.InstructorGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateInstructorResponse>> AddAsync(CreateInstructorRequest request)
         {
             await _rules.CheckIfInstructorNotExists(request.UserName, request.NationalIdentity);

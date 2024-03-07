@@ -12,6 +12,9 @@ namespace Business.Constants
         public static string BlacklistDeleted = "Blacklist Deleted Successfully";
         public static string BlacklistUpdated = "Blacklist Updated Successfully";
         public static string BlacklistGetAll = "Blacklists Listed Successfully";
-        public static string BlacklistGetById = "The Blacklist Was Successfully Brought According To The ID";
+        public static string BlacklistGetById = "The Blacklist Was Successfully Brought According To The Id";
+        public static string BlacklistGetByApplicantId = "The Blacklist Was Successfully Brought According To The ApplicantId";
+        public static string BlacklistIdNotExists = " Blacklist Id not exists.";
+        public static string ApplicantAlreadyBlacklist = "Applicant is already blacklisted.";
     }
 }

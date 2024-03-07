@@ -5,6 +5,9 @@ using Business.Constants;
 using Business.Requests.Applications;
 using Business.Responses.Applications;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.DataAccess;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -44,12 +47,17 @@ namespace Business.Concretes
             GetByIdApplicationResponse response = _mapper.Map<GetByIdApplicationResponse>(application);
             return new SuccessDataResult<GetByIdApplicationResponse>(response,ApplicationMessages.ApplicationGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateApplicationResponse>> AddAsync(CreateApplicationRequest request)
         {
+            await _rules.CheckIfApplicantIdNotExists(request.ApplicantId);
             await _rules.CheckIfBlacklist(request.ApplicantId);
+            await _rules.CheckIfBootcampIdNotExists(request.BootcampId);
+            await _rules.CheckIfApplicantionStateIdNotExists(request.ApplicationStateId);
+            await _rules.CheckIfApplicantAlreadyAppliedToBootcamp(request.ApplicantId, request.BootcampId);
             Application application = _mapper.Map<Application>(request);
             await _applicationRepository.AddAsync(application);
-
             CreateApplicationResponse response = _mapper.Map<CreateApplicationResponse>(application);
             return new SuccessDataResult<CreateApplicationResponse>(response, ApplicationMessages.ApplicationAdded);
         }

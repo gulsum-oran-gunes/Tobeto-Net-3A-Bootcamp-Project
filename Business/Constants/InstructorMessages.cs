@@ -13,5 +13,11 @@ namespace Business.Constants
         public static string InstructorUpdated = "Instructor Updated Successfully";
         public static string InstructorGetAll = "Instructors Listed Successfully";
         public static string InstructorGetById = "The Instructor Was Successfully Brought According To The ID";
+        public static string InstructorIdNotExists = "Instructor Id not exists";
+        public static string InstructorAlreadyExists = "UserName or National Identity is already exists";
+
+
+
+
     }
 }

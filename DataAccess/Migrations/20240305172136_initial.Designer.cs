@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20240226152236_new7")]
-    partial class new7
+    [Migration("20240305172136_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,12 +60,11 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicantId");
+
                     b.HasIndex("ApplicationStateId");
 
                     b.HasIndex("BootcampId");
-
-                    b.HasIndex("ApplicantId", "BootcampId", "ApplicationStateId")
-                        .IsUnique();
 
                     b.ToTable("Applications", (string)null);
                 });

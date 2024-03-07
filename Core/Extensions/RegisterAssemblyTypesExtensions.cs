@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Exceptions.Extensions
+namespace Core.Extensions
 {
-    public  static class RegisterAssemblyTypesExtensions
+    public static class RegisterAssemblyTypesExtensions
     {
         public static IServiceCollection RegisterAssemblyTypes
       (this IServiceCollection services, Assembly assembly)

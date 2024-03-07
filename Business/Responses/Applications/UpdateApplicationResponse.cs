@@ -10,8 +10,10 @@ namespace Business.Responses.Applications
     {
         public int Id { get; set; }
         public int ApplicantId { get; set; }
-        public int BootcampId { get; set; }
-        public int ApplicationStateId { get; set; }
+        public string ApplicantFirstName { get; set; }
+        public string ApplicantLastName { get; set; }
+        public string BootcampName { get; set; }
+        public string ApplicationStateName { get; set; }
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
     }
 }

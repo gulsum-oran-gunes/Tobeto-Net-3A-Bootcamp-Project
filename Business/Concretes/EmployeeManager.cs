@@ -7,6 +7,8 @@ using Business.Requests.Employees;
 using Business.Responses.Employees;
 using Business.Responses.Employees;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -45,6 +47,8 @@ namespace Business.Concretes
             GetByIdEmployeeResponse response = _mapper.Map<GetByIdEmployeeResponse>(employee);
             return new SuccessDataResult<GetByIdEmployeeResponse>(response, EmployeeMessages.EmployeeGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateEmployeeResponse>> AddAsync(CreateEmployeeRequest request)
         {
             await _rules.CheckIfEmployeeNotExists(request.UserName, request.NationalIdentity);

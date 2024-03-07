@@ -9,8 +9,7 @@ namespace Entities.Concretes
 {
     public class Blacklist :BaseEntity<int>
     {
-        public int Id { get; set; }
-
+        public int Id {  get; set; }
         public int ApplicantId { get; set; }
 
         public string Reason { get; set; }
@@ -21,11 +20,8 @@ namespace Entities.Concretes
         {
             
         }
-
-
         public  Blacklist (int id, int applicantId, string reason, DateTime date )
         {
-
             Id = id;
             ApplicantId = applicantId;
             Reason = reason;

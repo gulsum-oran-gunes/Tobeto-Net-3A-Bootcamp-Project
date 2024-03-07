@@ -23,6 +23,7 @@ namespace Business.Profiles.Blacklists
             CreateMap<Blacklist, DeleteBlacklistResponse>().ReverseMap();
             CreateMap<Blacklist, GetByIdBlacklistResponse>().ReverseMap();
             CreateMap<Blacklist, UpdateBlacklistResponse>().ReverseMap();
+            CreateMap<Blacklist, GetByApplicantIdResponse>().ReverseMap();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace Business.Constants
      
         public static string UserGetAll = "Users Listed Successfully";
         public static string UserGetById = "The User Was Successfully Brought According To The ID";
+        public static string UserIdNotExists = "User Id not exist";
     }
 }

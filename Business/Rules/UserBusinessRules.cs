@@ -1,4 +1,5 @@
-﻿using Core.CrossCuttingConcerns.Rules;
+﻿using Business.Constants;
+using Core.CrossCuttingConcerns.Rules;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.Repositories;
@@ -20,7 +21,7 @@ namespace Business.Rules
         public async Task CheckIfIdNotExists(int userId)
         {
             var isExists = await _repository.GetAsync(x => x.Id == userId);
-            if (isExists is null) throw new BusinessException("Id not exists");
+            if (isExists is null) throw new BusinessException(UserMessages.UserIdNotExists);
 
         }
 

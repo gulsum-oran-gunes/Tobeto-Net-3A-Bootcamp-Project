@@ -13,5 +13,6 @@ namespace Business.Constants
         public static string BootcampUpdated = "Bootcamp Updated Successfully";
         public static string BootcampGetAll = "Bootcamps Listed Successfully";
         public static string BootcampGetById = "The Bootcamp Was Successfully Brought According To The ID";
+        public static string BootcampIdNotExists = "Bootcamp Id not exists";
     }
 }

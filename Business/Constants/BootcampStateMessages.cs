@@ -13,5 +13,7 @@ namespace Business.Constants
         public static string BootcampStateUpdated = "BootcampState Updated Successfully";
         public static string BootcampStateGetAll = "BootcampStates Listed Successfully";
         public static string BootcampStateGetById = "The BootcampState Was Successfully Brought According To The ID";
+        public static string BootcampStateIdNotExists = "Bootcamp Id not exists.";
+    
     }
 }

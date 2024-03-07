@@ -7,6 +7,9 @@ using Business.Responses.Applicants;
 using Business.Responses.Blacklists;
 using Business.Responses.Blacklists;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.DataAccess;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -46,8 +49,12 @@ namespace Business.Concretes
             GetByIdBlacklistResponse response = _mapper.Map<GetByIdBlacklistResponse>(blacklist);
             return new SuccessDataResult<GetByIdBlacklistResponse>(response, BlacklistMessages.BlacklistGetById);
         }
+
+        [LogAspect(typeof(MongoDbLogger))]
         public async Task<IDataResult<CreateBlacklistResponse>> AddAsync(CreateBlacklistRequest request)
         {
+            await _rules.CheckIfApplicantIdNotExists(request.ApplicantId);
+            await _rules.CheckIfApplicantAlreadyBlacklisted(request.ApplicantId);
             Blacklist blacklist = _mapper.Map<Blacklist>(request);
             await _blacklistRepository.AddAsync(blacklist);
 
@@ -72,6 +79,13 @@ namespace Business.Concretes
             await _blacklistRepository.UpdateAsync(blacklist);
             UpdateBlacklistResponse response = _mapper.Map<UpdateBlacklistResponse>(blacklist);
             return new SuccessDataResult<UpdateBlacklistResponse>(response, BlacklistMessages.BlacklistUpdated);
+        }
+
+        public async Task<IDataResult<GetByApplicantIdResponse>> GetByApplicantIdAsync(int applicantId)
+        {
+            Blacklist blacklist = await _blacklistRepository.GetAsync(x => x.ApplicantId == applicantId);
+            GetByApplicantIdResponse response = _mapper.Map<GetByApplicantIdResponse>(blacklist);
+            return new SuccessDataResult<GetByApplicantIdResponse>(response, BlacklistMessages.BlacklistGetByApplicantId);
         }
 
         

@@ -2,6 +2,7 @@
 using Business.Responses.Blacklists;
 using Business.Responses.Blacklists;
 using Core.Utilities.Results;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Business.Abstracts
         Task<IDataResult<CreateBlacklistResponse>> AddAsync(CreateBlacklistRequest request);
         Task<IResult> DeleteAsync(DeleteBlacklistRequest request);
         Task<IDataResult<UpdateBlacklistResponse>> UpdateAsync(UpdateBlacklistRequest request);
+        Task<IDataResult<GetByApplicantIdResponse>> GetByApplicantIdAsync(int applicantId);
+
     }
 }

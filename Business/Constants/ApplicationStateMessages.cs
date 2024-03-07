@@ -13,5 +13,6 @@ namespace Business.Constants
         public static string ApplicationStateUpdated = "ApplicationState Updated Successfully";
         public static string ApplicationStateGetAll = "ApplicationStates Listed Successfully";
         public static string ApplicationStateGetById = "The ApplicationState Was Successfully Brought According To The ID";
+        public static string ApplicationStateIdNotExist = "Application State Id not exist";
     }
 }
