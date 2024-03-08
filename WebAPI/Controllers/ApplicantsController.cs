@@ -4,6 +4,7 @@ using Business.Responses.Applicants;
 using Business.Responses.Applications;
 using Business.Responses.ApplicationStates;
 using Core.Utilities.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using IResult = Core.Utilities.Results.IResult;
@@ -21,6 +22,7 @@ namespace WebAPI.Controllers
             _applicantService = applicantService;
         }
 
+        [Authorize(Roles = "applicant.list")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

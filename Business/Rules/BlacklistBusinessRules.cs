@@ -39,7 +39,6 @@ namespace Business.Rules
         }
         public async Task CheckIfApplicantAlreadyBlacklisted(int applicantId)
         {
-            
             var isBlacklisted = await _repository.GetAsync(x => x.ApplicantId == applicantId);
             if (isBlacklisted is not null) throw new BusinessException(BlacklistMessages.ApplicantAlreadyBlacklist);
            

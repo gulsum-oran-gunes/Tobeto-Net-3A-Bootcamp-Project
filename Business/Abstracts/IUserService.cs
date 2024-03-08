@@ -14,6 +14,7 @@ namespace Business.Abstracts
     {
         Task<IDataResult<List<GetAllUserResponse>>> GetAllAsync();
         Task<IDataResult<GetByIdUserResponse>>GetByIdAsync(int id);
-       
+        Task<DataResult<User>> GetByMail(string email);
+
     }
 }

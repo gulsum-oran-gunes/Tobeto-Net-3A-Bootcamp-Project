@@ -25,7 +25,6 @@ namespace Business.Rules
             var isExists = await _repository.GetAsync(bootcampState => bootcampState.Id == bootcampStateId);
             if (isExists is null) throw new BusinessException(BootcampStateMessages.BootcampStateIdNotExists);
 
-
         }
 
 

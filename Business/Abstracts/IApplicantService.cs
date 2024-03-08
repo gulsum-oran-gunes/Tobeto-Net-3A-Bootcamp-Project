@@ -2,6 +2,7 @@
 using Business.Responses.Applicants;
 using Business.Responses.Applications;
 using Core.Utilities.Results;
+using Core.Utilities.Security.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Business.Abstracts
         Task<IDataResult<List<GetAllApplicantResponse>>> GetAllAsync();
         Task<IDataResult<GetByIdApplicantResponse>>GetByIdAsync(int id);
         Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request);
+       
         Task<IResult> DeleteAsync(DeleteApplicantRequest request);
         Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request);
     }

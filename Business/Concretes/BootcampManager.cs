@@ -4,7 +4,6 @@ using Business.Abstracts;
 using Business.Constants;
 using Business.Requests.Bootcamps;
 using Business.Responses.Bootcamps;
-using Business.Responses.Bootcamps;
 using Business.Rules;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;

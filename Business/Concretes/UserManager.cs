@@ -43,7 +43,10 @@ namespace Business.Concretes
             GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
             return new SuccessDataResult<GetByIdUserResponse>(response, UserMessages.UserGetById);
         }
-       
 
+        public async Task<DataResult<User>> GetByMail(string email)
+        {
+            return new SuccessDataResult<User>(await _userRepository.GetAsync(x => x.Email == email));
+        }
     }
 }
